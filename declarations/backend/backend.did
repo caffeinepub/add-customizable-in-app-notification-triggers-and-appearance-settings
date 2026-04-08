@@ -1,0 +1,94 @@
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = record {name: text;};
+type Time = int;
+type Message = 
+ record {
+   content: text;
+   sender: text;
+   timestamp: Time;
+ };
+type LakeLocationEvent = 
+ record {
+   location: LakeLocation;
+   organizer: text;
+   owner: principal;
+   time: text;
+ };
+type LakeLocation = 
+ variant {
+   bigIslandBeach;
+   bigIslandCove;
+   karenCove;
+   marina;
+   sandBar;
+   sandyBeach;
+   skylineBar;
+ };
+type FileReference = 
+ record {
+   hash: text;
+   path: text;
+ };
+type CampfireEvent = 
+ record {
+   campsiteNumber: text;
+   date: int;
+   organizer: text;
+   owner: principal;
+   time: text;
+ };
+type Camper = 
+ record {
+   name: text;
+   numberOfCampers: nat;
+   plannedArrival: opt int;
+   plannedDeparture: opt int;
+   siteNumber: opt text;
+   status: ArrivalStatus;
+ };
+type ArrivalStatus = 
+ variant {
+   atTheLake;
+   onTheWay;
+   planning;
+ };
+service : {
+  addOrUpdateCamper: (name: text, plannedArrival: opt int, plannedDeparture:
+   opt int, siteNumber: opt text, numberOfCampers: nat) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  clearCamper: (name: text) -> ();
+  createCampfireEvent: (organizer: text, date: int, time: text,
+   campsiteNumber: text) -> ();
+  createLakeLocationEvent: (organizer: text, time: text, location:
+   LakeLocation) -> ();
+  deleteCampfireEvent: (eventId: int) -> ();
+  deleteLakeLocationEvent: (eventId: int) -> ();
+  dropFileReference: (path: text) -> ();
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCampers: () -> (vec Camper) query;
+  getCampfireEvents: () -> (vec CampfireEvent) query;
+  getFileReference: (path: text) -> (FileReference) query;
+  getLakeLocationEvents: () -> (vec LakeLocationEvent) query;
+  getMessages: () -> (vec Message) query;
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  initializeAccessControl: () -> ();
+  isCallerAdmin: () -> (bool) query;
+  listFileReferences: () -> (vec FileReference) query;
+  registerFileReference: (path: text, hash: text) -> ();
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+  sendMessage: (sender: text, content: text) -> ();
+  updateCampfireEvent: (organizer: text, date: int, time: text,
+   campsiteNumber: text) -> ();
+  updateLakeLocationEvent: (organizer: text, time: text, location:
+   LakeLocation) -> ();
+  updateNumberOfCampers: (name: text, numberOfCampers: nat) -> ();
+  updatePlannedDeparture: (name: text, plannedDeparture: opt int) -> ();
+  updateSiteNumber: (name: text, siteNumber: opt text) -> ();
+  updateStatus: (name: text, status: ArrivalStatus) -> ();
+}

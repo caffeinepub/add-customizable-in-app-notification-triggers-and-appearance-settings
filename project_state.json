@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "New project",
+  "architectural_notes": [
+    "Current notifications are in-app toast messages shown only while the app is open/active; no background push support available yet."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-add-persisted-per-user-notification-preferences-so-each-signed-in-user-can-customize-which-in-app-activities-trigger-notifications-and-how-notifications-visually-appear",
+      "title": "Add persisted per-user notification preferences so each signed-in user can customize which in-app activities trigger notifications and how notifications visually appear.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-implement-an-in-app-notification-system-using-the-existing-toast-toaster-setup-that-can-emit-notifications-for-supported-activities-and-respects-the-user-s-trigger-preferences",
+      "title": "Frontend: implement an in-app notification system (using the existing toast/toaster setup) that can emit notifications for supported activities and respects the user’s trigger preferences.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-add-a-user-facing-settings-ui-to-customize-notification-triggers-and-visual-appearance-and-persist-changes-to-the-backend",
+      "title": "Frontend: add a user-facing settings UI to customize notification triggers and visual appearance, and persist changes to the backend.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-frontend-apply-the-selected-visual-appearance-settings-consistently-to-all-in-app-notifications-styling-placement-and-any-icons-colors",
+      "title": "Frontend: apply the selected visual appearance settings consistently to all in-app notifications (styling, placement, and any icons/colors).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Integrate a weather API and display weather info in the app (location/placement TBD)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Allow customization of in-app notifications: which activities trigger them and how they look (visual style/placement)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add support for push notifications when the app is closed/minimized (notify user when platform support becomes available)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Backend: extend the existing UserProfile model and APIs to support notification preferences, including query/update methods for the caller.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Add customizable in-app notification triggers and appearance settings",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

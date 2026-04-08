@@ -1,0 +1,127 @@
+{
+  "kind": "build_request",
+  "title": "Add customizable in-app notification triggers and appearance settings",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Add persisted per-user notification preferences so each signed-in user can customize which in-app activities trigger notifications and how notifications visually appear.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "customize which activities trigger notifications or how they visually appear?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Notification preferences are stored per Internet Identity principal and persist across refresh/login.",
+        "A reasonable default preference set exists for new users (e.g., some triggers enabled by default).",
+        "Preferences include at least (a) trigger toggles and (b) visual appearance options.",
+        "Frontend reads preferences on load and uses them to control notification behavior without requiring a redeploy."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Backend: extend the existing UserProfile model and APIs to support notification preferences, including query/update methods for the caller.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "customize which activities trigger notifications or how they visually appear?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "backend/main.mo UserProfile is extended to include notification preference fields (in addition to existing name).",
+        "Backend exposes functions to (a) get the caller's notification preferences and (b) update/save them for the caller.",
+        "Existing user profile data is not lost after upgrade (older stored profiles continue to load).",
+        "All logic remains in the single main actor file; a migration file is created only if required to preserve existing stable state."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Frontend: implement an in-app notification system (using the existing toast/toaster setup) that can emit notifications for supported activities and respects the user’s trigger preferences.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "customize which activities trigger notifications or how they visually appear?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A new (non-placeholder) notifications hook/module exists to centralize notification logic (replacing the empty frontend/src/hooks/useNotifications.ts placeholder).",
+        "Notifications are shown only while the app is open (no push/background behavior).",
+        "At least two app activities can generate notifications and are individually toggleable (e.g., new chat messages; new/updated campfire or lake-location events; or other existing app activities).",
+        "When a trigger is disabled in preferences, the corresponding toast never appears."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Frontend: add a user-facing settings UI to customize notification triggers and visual appearance, and persist changes to the backend.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "customize which activities trigger notifications or how they visually appear?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The app provides a clear place to configure notification settings (either within the existing Profile section or as a new navigation section).",
+        "The settings UI includes toggles for each supported notification trigger.",
+        "The settings UI includes controls for at least: toast position (top/bottom) and visual style (e.g., subtle vs. prominent and/or category colors/icons).",
+        "Saving settings shows success/error feedback using English user-facing text.",
+        "On reload, the UI reflects the saved settings fetched from the backend."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Frontend: apply the selected visual appearance settings consistently to all in-app notifications (styling, placement, and any icons/colors).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "customize which activities trigger notifications or how they visually appear?"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All notification toasts follow the chosen position and style settings.",
+        "Different notification categories (if implemented) use consistent visuals (e.g., the same color/icon mapping) across the app.",
+        "No direct edits are made to read-only component sources under frontend/src/components/ui; composition/wrapping is used instead."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not implement push notifications when the app is closed/minimized; notifications must remain in-app only.",
+    "Respect the single-actor Motoko backend architecture (all logic in backend/main.mo).",
+    "Do not modify files under frontend/src/components/ui (compose them instead).",
+    "Do not modify immutable hook files listed in SYSTEM_CONTEXT (e.g., useActor/useInternetIdentity/main.tsx)."
+  ],
+  "nonGoals": [
+    "Integrating browser push notifications, service workers, or any background notification delivery.",
+    "Adding third-party notification providers (email/SMS/push services).",
+    "Building a real-time websocket-based notification system."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

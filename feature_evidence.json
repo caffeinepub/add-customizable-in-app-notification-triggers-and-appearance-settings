@@ -1,0 +1,90 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-add-persisted-per-user-notification-preferences-so-each-signed-in-user-can-customize-which-in-app-activities-trigger-notifications-and-how-notifications-visually-appear",
+      "featureTitle": "Add persisted per-user notification preferences so each signed-in user can customize which in-app activities trigger notifications and how notifications visually appear.",
+      "files": [
+        "frontend/src/hooks/useNotificationPreferences.ts",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "authorization@1.0.1",
+        "blob-storage@1.1.2",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-implement-an-in-app-notification-system-using-the-existing-toast-toaster-setup-that-can-emit-notifications-for-supported-activities-and-respects-the-user-s-trigger-preferences",
+      "featureTitle": "Frontend: implement an in-app notification system (using the existing toast/toaster setup) that can emit notifications for supported activities and respects the user’s trigger preferences.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/hooks/useNotifications.ts"
+      ],
+      "components": [
+        "authorization@1.0.1",
+        "blob-storage@1.1.2",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-add-a-user-facing-settings-ui-to-customize-notification-triggers-and-visual-appearance-and-persist-changes-to-the-backend",
+      "featureTitle": "Frontend: add a user-facing settings UI to customize notification triggers and visual appearance, and persist changes to the backend.",
+      "files": [
+        "frontend/src/components/NotificationSettingsCard.tsx",
+        "frontend/src/components/ProfileSection.tsx"
+      ],
+      "components": [
+        "authorization@1.0.1",
+        "blob-storage@1.1.2",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-frontend-apply-the-selected-visual-appearance-settings-consistently-to-all-in-app-notifications-styling-placement-and-any-icons-colors",
+      "featureTitle": "Frontend: apply the selected visual appearance settings consistently to all in-app notifications (styling, placement, and any icons/colors).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/NotificationToaster.tsx",
+        "frontend/src/hooks/useNotifications.ts"
+      ],
+      "components": [
+        "authorization@1.0.1",
+        "blob-storage@1.1.2",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

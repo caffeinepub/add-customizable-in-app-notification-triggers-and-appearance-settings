@@ -1,0 +1,110 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Customizable in-app notification triggers and appearance settings (frontend)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Persist and load per-user notification preferences (trigger toggles + toast appearance) and apply them at runtime.",
+      "acceptanceCriteria": [
+        "Notification preferences are stored per Internet Identity principal and persist across refresh/login.",
+        "A reasonable default preference set exists for new users (e.g., some triggers enabled by default).",
+        "Preferences include at least (a) trigger toggles and (b) visual appearance options.",
+        "Frontend reads preferences on load and uses them to control notification behavior without requiring a redeploy."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Add React Query hooks for notification preferences using the available backend capabilities (getCallerNotificationPreferences, updateCallerNotificationPreferences). Ensure hooks are actor-dependent and safe when unauthenticated. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useNotificationPreferences.ts",
+          "operation": "create",
+          "description": "Create a small preferences module to centralize defaults, normalization (merge backend Optionals with defaults), and type-safe helpers for NotificationPreferences/ToastAppearance/NotificationTriggers. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement a centralized in-app notification system using the existing toast/toaster setup and respecting trigger preferences.",
+      "acceptanceCriteria": [
+        "A new (non-placeholder) notifications hook/module exists to centralize notification logic (replacing the empty frontend/src/hooks/useNotifications.ts placeholder).",
+        "Notifications are shown only while the app is open (no push/background behavior).",
+        "At least two app activities can generate notifications and are individually toggleable (e.g., new chat messages; new/updated campfire or lake-location events; or other existing app activities).",
+        "When a trigger is disabled in preferences, the corresponding toast never appears."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useNotifications.ts",
+          "operation": "modify",
+          "description": "Replace the placeholder with a real notifications hook/module that: (1) reads normalized preferences, (2) exposes notify helpers by category, and (3) contains opt-in watchers that emit toasts for at least two activities (e.g., new chat messages and new/updated campfire or lake-location events) by comparing latest vs previous query results. Ensure disabled triggers suppress toasts entirely. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the notification system so it runs while the app is open (e.g., call the watcher hook from AppContent) and remains purely in-app. Ensure the watcher is mounted once at app level to avoid duplicate toasts. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ChatSection.tsx",
+          "operation": "modify",
+          "description": "Integrate with the centralized notifications module as needed to support the 'message received' activity (e.g., provide current sender/name context or ensure message list updates can be observed without duplicating logic). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/CampfireSection.tsx",
+          "operation": "modify",
+          "description": "Integrate with the centralized notifications module as needed to support a second toggleable activity (e.g., new/updated campfire events) without adding any background/push behavior. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Add a user-facing notification settings UI (triggers + appearance) and persist changes to the backend with toast feedback.",
+      "acceptanceCriteria": [
+        "The app provides a clear place to configure notification settings (either within the existing Profile section or as a new navigation section).",
+        "The settings UI includes toggles for each supported notification trigger.",
+        "The settings UI includes controls for at least: toast position (top/bottom) and visual style (e.g., subtle vs. prominent and/or category colors/icons).",
+        "Saving settings shows success/error feedback using English user-facing text.",
+        "On reload, the UI reflects the saved settings fetched from the backend."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/NotificationSettingsCard.tsx",
+          "operation": "create",
+          "description": "Create a settings UI component that loads normalized notification preferences, renders trigger toggles for supported activities, and provides appearance controls (at minimum: top/bottom toast position and subtle/prominent style). On save, persist via the preferences mutation and show success/error feedback using the existing toast system with English text. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProfileSection.tsx",
+          "operation": "modify",
+          "description": "Add the NotificationSettingsCard into the existing Profile section (clear, user-facing place for configuration) and ensure the UI reflects saved backend values on reload. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Apply the selected appearance settings (placement, styling, and icons/colors) consistently to all in-app notifications without editing read-only UI component sources.",
+      "acceptanceCriteria": [
+        "All notification toasts follow the chosen position and style settings.",
+        "Different notification categories (if implemented) use consistent visuals (e.g., the same color/icon mapping) across the app.",
+        "No direct edits are made to read-only component sources under frontend/src/components/ui; composition/wrapping is used instead."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/NotificationToaster.tsx",
+          "operation": "create",
+          "description": "Create a small wrapper component that reads normalized toast appearance preferences and renders the existing Toaster with the correct position/behavior. Do not modify frontend/src/components/ui sources; only compose/wrap. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Replace the direct <Toaster /> usage with the NotificationToaster wrapper so toast position follows the saved user preference consistently. Ensure no edits to frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useNotifications.ts",
+          "operation": "modify",
+          "description": "Ensure all toast emissions go through the centralized notifications module so visual style (subtle/prominent) and any category icon/color mapping are applied consistently across all in-app notifications. Verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-11T16:17:45.534Z",
+  "summary": "Diff implements notification preference types (triggers + appearance), adds a persisted per-user preferences migration, adds a notification settings UI in Profile, and introduces an in-app notification watcher/toaster that uses preferences for trigger gating and toast placement/styling. However, several unrelated UI/feature changes were introduced, and two hook files that were listed as immutable constraints appear to have been modified.",
+  "missing_requirements": [],
+  "hallucinated_features": [
+    {
+      "description": "Modified an immutable hook file (useInternetIdentity) despite the constraint to not modify immutable hook files.",
+      "reason": "BuildRequest explicitly prohibits modifying immutable hook files listed in SYSTEM_CONTEXT (example given: useInternetIdentity). The diff shows changes in this file.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts"
+      ]
+    },
+    {
+      "description": "Modified an immutable hook file (useActor) despite the constraint to not modify immutable hook files listed in SYSTEM_CONTEXT (example given: useActor).",
+      "reason": "BuildRequest explicitly prohibits modifying immutable hook files listed in SYSTEM_CONTEXT (example given: useActor). The diff shows changes in this file.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Added/changed session validation behavior that signs out expired users and calls backend cleanup methods.",
+      "reason": "Not requested by any REQ; introduces new auth/session behavior unrelated to in-app notifications/preferences.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/hooks/useSessionValidation.ts)"
+      ]
+    },
+    {
+      "description": "Changed Header navigation to include a tooltip message on the Lake Locations tab.",
+      "reason": "Not requested by any REQ; unrelated UI enhancement.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/components/Header.tsx)"
+      ]
+    },
+    {
+      "description": "Modified Hero/Home page content and layout (feature cards, welcome messaging, grid layout changes).",
+      "reason": "Not requested by any REQ; unrelated landing page redesign.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/components/Hero.tsx)",
+        "frontend-file-summaries.txt (mentions frontend/src/components/HomePage.tsx)"
+      ]
+    },
+    {
+      "description": "Changed CamperDirectory visuals/behavior (avatar initials, delete icon, Tailwind class updates, timezone-safe formatting).",
+      "reason": "Not requested by any REQ; unrelated directory UI refactor.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/components/CamperDirectory.tsx)"
+      ]
+    },
+    {
+      "description": "Changed ChatSection layout/behavior (auto-scrolling, input moved to top, message navigation tweaks).",
+      "reason": "Not requested by any REQ; unrelated chat UI changes.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/components/ChatSection.tsx)"
+      ]
+    },
+    {
+      "description": "Changed Footer attribution/styling.",
+      "reason": "Not requested by any REQ; unrelated footer change.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/components/Footer.tsx)"
+      ]
+    },
+    {
+      "description": "Modified global styling and Tailwind configuration (color system/token changes).",
+      "reason": "Not requested by any REQ; unrelated design system changes.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/index.css)",
+        "frontend-file-summaries.txt (mentions frontend/tailwind.config.js)"
+      ]
+    },
+    {
+      "description": "LakeLocationSection changes beyond notifications (delete behavior using backend-generated id, allowing any user deletion, mobile-friendly dialog tweaks).",
+      "reason": "Not requested by any REQ; unrelated feature/permissions change in lake location events.",
+      "evidence": [
+        "frontend-file-summaries.txt (mentions frontend/src/components/LakeLocationSection.tsx)",
+        "frontend/src/components/LakeLocationSection.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.72,
+  "changed_files": [
+    "backend/main.mo",
+    "backend/migration.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/components/LakeLocationSection.tsx",
+    "frontend/src/components/NotificationSettingsCard.tsx",
+    "frontend/src/components/NotificationToaster.tsx",
+    "frontend/src/components/ProfileSection.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useNotificationPreferences.ts",
+    "frontend/src/hooks/useNotifications.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "project_state.json"
+  ]
+}

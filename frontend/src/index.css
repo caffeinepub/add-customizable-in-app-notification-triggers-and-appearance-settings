@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.5rem;
+        --background: oklch(98% 0.01 120);
+        --foreground: oklch(15% 0.05 240);
+        --card: oklch(100% 0 0);
+        --card-foreground: oklch(15% 0.05 240);
+        --popover: oklch(100% 0 0);
+        --popover-foreground: oklch(15% 0.05 240);
+        --primary: oklch(35% 0.15 160);
+        --primary-foreground: oklch(98% 0.01 120);
+        --secondary: oklch(95% 0.02 120);
+        --secondary-foreground: oklch(15% 0.05 240);
+        --muted: oklch(95% 0.02 120);
+        --muted-foreground: oklch(50% 0.05 240);
+        --accent: oklch(92% 0.03 160);
+        --accent-foreground: oklch(15% 0.05 240);
+        --destructive: oklch(60% 0.2 20);
+        --destructive-foreground: oklch(98% 0.01 120);
+        --border: oklch(90% 0.02 120);
+        --input: oklch(90% 0.02 120);
+        --ring: oklch(35% 0.15 160);
+        --chart-1: oklch(65% 0.15 30);
+        --chart-2: oklch(55% 0.12 180);
+        --chart-3: oklch(45% 0.08 220);
+        --chart-4: oklch(70% 0.18 60);
+        --chart-5: oklch(68% 0.16 40);
+    }
+
+    .dark {
+        --background: oklch(12% 0.02 240);
+        --foreground: oklch(95% 0.01 120);
+        --card: oklch(12% 0.02 240);
+        --card-foreground: oklch(95% 0.01 120);
+        --popover: oklch(12% 0.02 240);
+        --popover-foreground: oklch(95% 0.01 120);
+        --primary: oklch(75% 0.12 160);
+        --primary-foreground: oklch(12% 0.02 240);
+        --secondary: oklch(20% 0.03 240);
+        --secondary-foreground: oklch(95% 0.01 120);
+        --muted: oklch(20% 0.03 240);
+        --muted-foreground: oklch(65% 0.05 240);
+        --accent: oklch(25% 0.04 160);
+        --accent-foreground: oklch(95% 0.01 120);
+        --destructive: oklch(50% 0.15 20);
+        --destructive-foreground: oklch(95% 0.01 120);
+        --border: oklch(20% 0.03 240);
+        --input: oklch(20% 0.03 240);
+        --ring: oklch(75% 0.12 160);
+        --chart-1: oklch(70% 0.12 30);
+        --chart-2: oklch(60% 0.10 180);
+        --chart-3: oklch(50% 0.08 220);
+        --chart-4: oklch(75% 0.15 60);
+        --chart-5: oklch(73% 0.13 40);
+    }
+
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
